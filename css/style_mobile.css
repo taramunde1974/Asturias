@@ -1,56 +1,213 @@
-/* ===== REGLAS RESPONSIVAS PARA WEBVIEW ===== */
-/* 1. Reset básico para móviles */
-html, body {
-    width: 100% !important;
-    height: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow-x: hidden !important;
-    -webkit-text-size-adjust: 100% !important; /* Evita zoom automático en iOS */
-    touch-action: manipulation; /* Mejora respuesta táctil */
+BODY {
+	FONT-SIZE:11px;FONT-FAMILY:Arial,Helvetica,Sans-Serif;background-color:#FFFFFF;margin:0;padding:0;
 }
-
-/* 2. Asegura que las tablas e imágenes sean responsivas */
-table {
-    max-width: 100% !important;
-    width: 100% !important;
-    border-collapse: collapse;
+html {
+	overflow-y:scroll;
 }
-
+TABLE {
+	FONT-SIZE:11px;FONT-FAMILY:Arial,Helvetica,Sans-Serif;border-collapse:collapse;border-spacing:0px;padding:0;
+}
+TD {
+	FONT-SIZE:0.9888em;FONT-FAMILY:Arial,Helvetica,Sans-Serif;padding:0;
+}
 img {
-    max-width: 100% !important;
-    height: auto !important;
+	border:0px;	
 }
-
-/* 3. Override para contenedores principales (ajusta según tu estructura) */
-.center {
-    width: 100% !important;
-    max-width: 412px; /* Máximo ancho para mantener legibilidad */
-    margin: 0 auto !important;
+a, a:link, a:visited, a:hover, a:active { color: #000000;
 }
-
-/* 4. Media Query para pantallas pequeñas */
-@media (max-width: 768px) {
-    body {
-        font-size: 14px !important; /* Tamaño de fuente más legible */
-    }
-    
-    /* Ajusta cajas como td.box */
-    td.box, td.box_hell, td.box_black {
-        width: 100% !important;
-        height: auto !important;
-        padding: 10px !important;
-        background-image: none !important; /* Opcional: elimina fondos fijos */
-    }
-    
-    /* Reduce padding en celdas */
-    td.lexikon, td.lexikon_m, td.lexikon_m2 {
-        padding: 5px !important;
-    }
+table.center {
+    margin-left:auto;margin-right:auto;padding:0; 
 }
-
-/* 5. Evita scroll horizontal */
-table, td, tr {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+table.links {
+    FONT-SIZE:11px;FONT-FAMILY:Arial,Helvetica,Sans-Serif;border-collapse:separate;border-spacing:1px;padding:0;
+}
+td.lexikon {
+    padding:9px;
+}
+td.lexikon_m {
+    padding:7px;
+}
+td.lexikon_m2 {
+    padding:7px 7px 7px 0px;
+}
+td.bes {
+    padding:9px 12px;background-image:url(bg_2_overview_3.gif);width:131px;height:131px;text-align:center;
+}
+td.bes_meer {
+    padding:9px 12px;background-image:url(bg_2_overview_m.gif);width:131px;height:131px;text-align:center; 
+}
+td.shop {
+    padding:5px; 
+}
+td.magazin {
+    padding:3px; 
+}
+td.box {
+    background-image:url(bg_2_overview_1.gif);width:131px;height:131px;text-align:center; 
+}
+td.box_black {
+    background-image:url(bg_2_overview_black.gif);width:131px;height:131px;text-align:center; 
+}
+td.box_hell {
+    background-image:url(art_0_6.gif);width:131px;height:131px;text-align:center; 
+}
+td.box_meer {
+    background-image:url(bg_2_overview_m.gif);width:131px;height:131px;text-align:center; 
+}
+td.box_m_hell {
+    background-image:url(art_0_m.gif);width:131px;height:131px;text-align:center; 
+}
+.normal {
+	FONT-SIZE:11px;FONT-FAMILY:Arial,Helvetica,Sans-Serif;
+}
+.headi {
+	FONT-WEIGHT:bold;FONT-SIZE:12px;FONT-FAMILY:Arial,Helvetica,Sans-Serif;
+}
+.head12 {
+	FONT-SIZE:12px;FONT-FAMILY:Arial,Helvetica,Sans-Serif;
+}
+.coupon1, .coupon1:link, .coupon1:visited, .coupon1:hover, .coupon1:active {
+	FONT-SIZE:15pt;COLOR:#F73B3C;FONT-FAMILY:Impact,Helvetica,fantasy;TEXT-DECORATION:underline;
+}
+.coupon2 {
+	FONT-SIZE:12px;COLOR:#333333;FONT-FAMILY:Arial,Helvetica,Sans-Serif;TEXT-DECORATION:none;
+}
+.auswahl {
+	FONT-SIZE:14px;COLOR:#FFFFFF;FONT-FAMILY:Charcoal,Impact,Helvetica,fantasy;TEXT-DECORATION:none;
+}
+.auswahlklein {
+	FONT-SIZE:13px;COLOR:#FFFFFF;FONT-FAMILY:Charcoal,Impact,Helvetica,fantasy;TEXT-DECORATION:none;
+}
+.headnew {
+	FONT-WEIGHT:bold;FONT-SIZE:8pt;FONT-FAMILY:Arial;COLOR:#FFFFFF;TEXT-DECORATION:none;
+}
+.auswahl, .auswahl:link, .auswahl:visited, .auswahl:hover, .auswahl:active {
+	FONT-SIZE:14px;COLOR:#FFFFFF;FONT-FAMILY:Charcoal,Impact,Helvetica,fantasy;TEXT-DECORATION:none;
+}
+.auswahlklein, .auswahlklein:link, .auswahlklein:visited, .auswahlklein:hover, .auswahlklein:active {
+	FONT-SIZE:13px;COLOR:#FFFFFF;FONT-FAMILY:Charcoal,Impact,Helvetica,fantasy;TEXT-DECORATION:none;
+}
+.subnavlink, .subnavlink:link, .subnavlink:visited, .subnavlink:active {
+	DISPLAY:block;height:13px;PADDING-TOP:3px;PADDING-BOTTOM:3px;TEXT-ALIGN:center;FONT-SIZE:10px;COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.subnavlink:hover {
+	DISPLAY:block;height:13px;PADDING-TOP:3px;PADDING-BOTTOM:3px;TEXT-ALIGN:center;FONT-SIZE:10px;COLOR:#C6E7BD;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlinka, navlinka:link, .navlinka:visited, .navlinka:active {
+	DISPLAY:block; height:25px; width:115px; PADDING-TOP:1px; PADDING-BOTTOM:2px; PADDING-LEFT:14px; FONT-SIZE:10px; COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlinka:hover {
+	DISPLAY:block; height:25px; width:115px; PADDING-TOP:1px; PADDING-BOTTOM:2px; PADDING-LEFT:14px; FONT-SIZE:10px; COLOR:#C6E7BD;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlinkb, .navlinkb:link, .navlinkb:visited, .navlinkb:active {
+	DISPLAY:block; height:26px; width:114px; PADDING-TOP:3px; PADDING-BOTTOM:3px; PADDING-LEFT:15px; FONT-SIZE:10px; COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlinkb:hover {
+	DISPLAY:block; height:26px; width:114px; PADDING-TOP:3px; PADDING-BOTTOM:3px; PADDING-LEFT:15px; FONT-SIZE:10px; COLOR:#C6E7BD;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlinkc, .navlinkc:link, .navlinkc:visited, .navlinkc:active {
+	DISPLAY:block; height:13px; width:114px; PADDING-TOP:3px; PADDING-BOTTOM:3px; PADDING-LEFT:15px; FONT-SIZE:10px; COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlinkc:hover {
+	DISPLAY:block; height:13px; width:114px; PADDING-TOP:3px; PADDING-BOTTOM:3px; PADDING-LEFT:15px; FONT-SIZE:10px; COLOR:#C6E7BD;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlinkd, .navlinkd:link, .navlinkd:visited, .navlinkd:active {
+	DISPLAY:block; height:38px; width:114px; PADDING-TOP:2px; PADDING-BOTTOM:1px; PADDING-LEFT:15px; FONT-SIZE:10px; COLOR:#000000;line-height:1.2em;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlinkd:hover {
+	DISPLAY:block; height:38px; width:114px; PADDING-TOP:2px; PADDING-BOTTOM:1px; PADDING-LEFT:15px; FONT-SIZE:10px; COLOR:#C6E7BD;line-height:1.2em;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlinke, .navlinke:link, .navlinke:visited, .navlinke:active {
+	DISPLAY:block; height:12px; width:114px; PADDING-TOP:1px; PADDING-BOTTOM:1px; PADDING-LEFT:15px; FONT-SIZE:10px; COLOR:#000000;line-height:1.2em;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlinke:hover {
+	DISPLAY:block; height:12px; width:114px; PADDING-TOP:1px; PADDING-BOTTOM:1px; PADDING-LEFT:15px; FONT-SIZE:10px; COLOR:#C6E7BD;line-height:1.2em;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.subnavlink2 {
+	FONT-SIZE:10px;COLOR:#C6E7BD;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.foto {
+	FONT-SIZE:10px;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.small, smallnav, .smallnav:link, .smallnav:visited, .smallnav:active {
+	FONT-SIZE:10px;COLOR:#A1A1A1;FONT-FAMILY:Arial,Helvetica,Sans-Serif;TEXT-DECORATION:none;
+}
+.smallnav:hover {
+	FONT-SIZE:10px;COLOR:#000000;FONT-FAMILY:Arial,Helvetica,Sans-Serif;TEXT-DECORATION:none;
+}
+fo {
+	FONT-SIZE:10px;COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;
+}
+INPUT {
+	FONT-SIZE:10px;COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;
+}
+OPTION {
+	FONT-SIZE:10px;COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;
+}
+SELECT {
+	FONT-SIZE:10px;COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;
+}
+texarea {
+	FONT-SIZE:10px;COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;
+}
+.bgcol1 {
+	BACKGROUND-COLOR:#C6E7BD;
+}
+.bgcol2 {
+	BACKGROUND-COLOR:#00C300;
+}
+.bgcol3 {
+	BACKGROUND-COLOR:#9FDFDF;
+}
+#black {
+	COLOR:#000000;
+}
+#green {
+	COLOR:#00c300;
+}
+#cookieChoiceInfo {
+position: fixed;
+top: auto;
+bottom: 0px;
+opacity: 0.9;
+padding: 0;
+}
+#pic {
+	FILTER:progid:DXImageTransform.Microsoft.Pixelate(MaxSquare=15,Duration=0.5);
+}
+#asbox { 
+    width:160px;height:601px;text-align:right;position:absolute;top:0px;right:50%;color:#cccccc;font-size:10px;margin-right:-361px;margin-top:104px;padding:0px;background-color:#ffffff;
+}
+#asbox_large { 
+    width:300px;height:620px;text-align:right;position:absolute;top:0px;right:50%;color:#cccccc;font-size:10px;margin-right:-501px;margin-top:104px;padding:0px;background-color:#ffffff;
+}
+.breadnavlink, .breadnavlink:link, .breadnavlink:visited, .breadnavlink:hover, .breadnavlink:active {
+	FONT-SIZE:10px;COLOR:#000000;line-height:1.4em;FONT-FAMILY:Arial, Helvetica, sans-serif;TEXT-DECORATION:none;
+}
+.navlink, .navlink:link, .navlink:visited, .navlink:hover, .navlink:active {
+	FONT-SIZE:10px;COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;
+}
+.navlink1, .navlink1:link, .navlink1:visited, .navlink1:hover, .navlink1:active {
+	FONT-SIZE:8pt;COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif; TEXT-DECORATION:underline;
+}
+.navlink2, .navlink2:link, .navlink2:visited, .navlink2:hover, .navlink2:active {
+	FONT-SIZE:8pt;COLOR:#000000;FONT-FAMILY:Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlink3, .navlink3:link, .navlink3:visited, .navlink3:hover, .navlink3:active {
+	FONT-SIZE:8pt;COLOR:#000000;FONT-FAMILY:Verdana,Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlink4, .navlink4:link, .navlink4:visited, .navlink4:hover, .navlink4:active {
+	FONT-SIZE:10px;COLOR:#000000;FONT-FAMILY:Verdana,Arial,Helvetica,sans-serif;TEXT-DECORATION:none;
+}
+.navlink5, .navlink5:link, .navlink5:visited, .navlink5:hover, .navlink5:active {
+	FONT-SIZE:10px;COLOR:#000000;FONT-FAMILY:Verdana,Arial,Helvetica,sans-serif;TEXT-DECORATION:underline;
+}
+.navlink6, .navlink6:link, .navlink6:visited, .navlink6:hover, .navlink6:active {
+	FONT-WEIGHT:bold;FONT-SIZE:12px;COLOR:#000000;FONT-FAMILY:Arial,Verdana,Helvetica,sans-serif;TEXT-DECORATION:underline;
+}
+.buchstabe {
+	FONT-WEIGHT:bold;FONT-SIZE:13pt;COLOR:#003366;FONT-FAMILY:verdana,arial;TEXT-DECORATION:none;
+}
+.buchstabe:hover {
+	FONT-WEIGHT:bold;FONT-SIZE:13pt;COLOR:#ffffff;FONT-FAMILY:verdana,arial;TEXT-DECORATION:none;
 }
