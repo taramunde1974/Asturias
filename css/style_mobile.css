@@ -1,0 +1,56 @@
+/* ===== REGLAS RESPONSIVAS PARA WEBVIEW ===== */
+/* 1. Reset básico para móviles */
+html, body {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100% !important; /* Evita zoom automático en iOS */
+    touch-action: manipulation; /* Mejora respuesta táctil */
+}
+
+/* 2. Asegura que las tablas e imágenes sean responsivas */
+table {
+    max-width: 100% !important;
+    width: 100% !important;
+    border-collapse: collapse;
+}
+
+img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* 3. Override para contenedores principales (ajusta según tu estructura) */
+.center {
+    width: 100% !important;
+    max-width: 412px; /* Máximo ancho para mantener legibilidad */
+    margin: 0 auto !important;
+}
+
+/* 4. Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px !important; /* Tamaño de fuente más legible */
+    }
+    
+    /* Ajusta cajas como td.box */
+    td.box, td.box_hell, td.box_black {
+        width: 100% !important;
+        height: auto !important;
+        padding: 10px !important;
+        background-image: none !important; /* Opcional: elimina fondos fijos */
+    }
+    
+    /* Reduce padding en celdas */
+    td.lexikon, td.lexikon_m, td.lexikon_m2 {
+        padding: 5px !important;
+    }
+}
+
+/* 5. Evita scroll horizontal */
+table, td, tr {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
