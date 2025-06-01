@@ -1,0 +1,2183 @@
+<!DOCTYPE html>
+<html>
+<title>Sangre Carbayona</title>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+<meta name="description" content="Página web dedicada a conocer todos los jugadores que han vestido la camiseta del primer equipo del Real Oviedo en toda su historia">
+<meta name="keywords" content="inicio, real oviedo, jugadores, delantero, portero, defensa, entrenador, fútbol, tartiere, buenavista, sangre carbayona, carbayon, oviedin">
+<meta name="copyright" content="sangrecarbayona.blogspot.com" /> 
+<meta name=”distribution” content=”global”/>
+<meta name="robots" content="index, follow">
+<meta name="author" content="Taramunde">
+<meta name="language" content="ES">  
+<meta name="Classification" content="Deportes">
+<meta name="revisit-after" content="1 day"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 
+  </head>  
+  
+  <!-- Inicio Titulo Real Oviedo Partículas-->
+  
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efecto de Texto con Partículas de Arena</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+
+        #arena-effect-container {
+            position: relative;
+            width: 100%;
+            min-height: 10vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #text-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: transparent;
+            white-space: nowrap;
+            line-height: 1;
+            max-width: 100%;
+            flex-wrap: nowrap;
+            font-family: 'Wordwalker';
+        }
+
+        .letter-container {
+            position: relative;
+            width: 1em; /* Todas las letras tienen el mismo ancho */
+            height: 1em;
+            margin-right: 0.05em; /* Espacio uniforme entre letras */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .space-container {
+            width: 0.5em; /* Espacio para el carácter de espacio */
+        }
+
+        .letter {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Ocupa todo el ancho del contenedor */
+            height: 100%;
+            color: #0e0eec;
+            opacity: 0;
+            animation: formLetter 0.5s forwards;
+            animation-delay: var(--letter-delay);
+            text-align: center; /* Centra la letra dentro del contenedor */
+        }
+
+        .particle {
+            position: absolute;
+            width: 0.15em;
+            height: 0.15em;
+            background-color: #0e0eec;
+            border-radius: 50%;
+            opacity: 0;
+            animation: moveParticle 1s ease-in-out forwards;
+            animation-delay: var(--particle-delay);
+        }
+
+        @keyframes moveParticle {
+            0% {
+                transform: translate(var(--start-x), var(--start-y));
+                opacity: 1;
+            }
+            50% {
+                transform: translate(calc(var(--target-x) + var(--offset-x)), calc(var(--target-y) + var(--offset-y)));
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--target-x), var(--target-y));
+                opacity: 0;
+            }
+        }
+
+        @keyframes formLetter {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Media queries para ajustar el tamaño de las letras según el ancho de la pantalla */
+        @media (max-width: 600px) {
+            /* Estilos para móviles */
+            #text-container {
+                font-size: 3rem; /* Tamaño de fuente para móviles */
+            }
+            .letter-container {
+                margin-right: 0.03em; /* Espacio más pequeño entre letras en móviles */
+            }
+            .space-container {
+                width: 0.4em; /* Espacio más pequeño para el carácter de espacio en móviles */
+            }
+        }
+
+        @media (min-width: 601px) and (max-width: 1024px) {
+            /* Estilos para tablets */
+            #text-container {
+                font-size: 4rem; /* Tamaño de fuente para tablets */
+            }
+            .letter-container {
+                margin-right: 0.04em; /* Espacio entre letras para tablets */
+            }
+            .space-container {
+                width: 0.5em; /* Espacio para el carácter de espacio en tablets */
+            }
+        }
+
+        @media (min-width: 1025px) {
+            /* Estilos para pantallas de escritorio */
+            #text-container {
+                font-size: 6rem; /* Tamaño de fuente para escritorio */
+            }
+            .letter-container {
+                margin-right: 0.05em; /* Espacio entre letras para escritorio */
+            }
+            .space-container {
+                width: 0.6em; /* Espacio para el carácter de espacio en escritorio */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="arena-effect-container" translate="no" class="notranslate" >
+        <div id="text-container"></div>
+    </div>
+
+    <script>
+        const text = "REAL OVIEDO";
+        const container = document.getElementById('text-container');
+        const particleCount = 30;
+
+        function createEffect() {
+            container.innerHTML = '';
+
+            let totalPreviousChars = 0;
+
+            text.split('').forEach((char, charIndex) => {
+                if (char === ' ') {
+                    // Si es un espacio, crea un contenedor de espacio
+                    const spaceContainer = document.createElement('div');
+                    spaceContainer.classList.add('space-container');
+                    container.appendChild(spaceContainer);
+                } else {
+                    // Si es una letra, crea el contenedor de la letra y las partículas
+                    const letterContainer = document.createElement('div');
+                    letterContainer.classList.add('letter-container');
+
+                    for (let i = 0; i < particleCount; i++) {
+                        const particle = document.createElement('div');
+                        particle.classList.add('particle');
+
+                        const startX = (Math.random() - 0.5) * 200;
+                        const startY = (Math.random() - 0.5) * 200;
+                        const offsetX = (Math.random() - 0.5) * 50;
+                        const offsetY = (Math.random() - 0.5) * 50;
+
+                        particle.style.setProperty('--start-x', `${startX}px`);
+                        particle.style.setProperty('--start-y', `${startY}px`);
+                        particle.style.setProperty('--target-x', '0px');
+                        particle.style.setProperty('--target-y', '0px');
+                        particle.style.setProperty('--offset-x', `${offsetX}px`);
+                        particle.style.setProperty('--offset-y', `${offsetY}px`);
+
+                        // Ajusta el retraso de las partículas
+                        particle.style.setProperty('--particle-delay', `${charIndex * 0.2 + i * 0.03}s`);
+
+                        letterContainer.appendChild(particle);
+                    }
+
+                    const letter = document.createElement('span');
+                    letter.textContent = char;
+                    letter.classList.add('letter');
+
+                    // Ajusta el retraso de la letra
+                    letter.style.setProperty('--letter-delay', `${charIndex * 0.2 + particleCount * 0.03}s`);
+
+                    letterContainer.appendChild(letter);
+                    container.appendChild(letterContainer);
+                }
+            });
+        }
+
+        createEffect();
+        setInterval(createEffect, 7000);
+      
+      // Bloquea la traducción del texto animado
+document.querySelectorAll('.letter').forEach(letter => {
+    letter.setAttribute('translate', 'no');
+});
+      
+    </script>
+</body>
+</html>
+
+
+        
+  
+  <!-- Fin Titulo Real Oviedo Partículas-->
+  
+  
+ <!-- Inicio Portada Herrerita con Titulo --> 
+  
+  <style>
+  .hero-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    width: 100%;
+    min-height: 200px;
+  }
+
+  .hero-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in forwards;
+  }
+
+  .hero-image {
+    width: 100%;
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .hero-content h1 {
+    color: white !important; /* Forzamos el color blanco */
+    margin: 0;
+    font-size: 2.5em; /* Hacemos el texto más grande */
+  }
+
+  .hero-text {
+    color: white;
+    margin: 10px 0 0;
+  }
+</style>
+
+<div class="hero-container">
+  <img class="hero-image" src="https://i.postimg.cc/hjgQZKFb/Portada.jpg" alt="Real Oviedo">
+  <div class="hero-content">
+    <h1>REAL OVIEDO</h1>
+    <p class="hero-text"><b>DESDE 1926, CON ORGULLO, VALOR Y GARRA.</b></p>
+  </div>
+</div>
+
+<!-- Fin Portada Herrerita con Titulo -->
+  
+  
+
+<style>
+  
+
+ h1 {
+  color: #0e0eec;
+} 
+  
+
+  
+</style>  
+  
+  
+  
+
+<!-- Inicio Alineación Confirmada -->
+<style>
+  /* Estilos generales */
+  .sections {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .section-column {
+    flex: 1;
+    margin: 10px;
+  }
+
+  .collapsible {
+    background-color: blue; /* Fondo azul */
+    color: white; /* Color del texto en blanco */
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+
+  .collapsible-content {
+    padding: 0 18px;
+    display: none; /* Inicialmente oculto */
+    overflow: hidden;
+    background-color: #f9f9f9; /* Fondo del contenido colapsable */
+  }
+
+  /* Media query para dispositivos móviles */
+  @media screen and (max-width: 768px) {
+    .sections {
+      flex-direction: column; /* Cambia a columna en móviles */
+    }
+    
+    .section-column {
+      width: 100%; /* Secciones ocupan todo el ancho */
+      margin: 5px 0; /* Espaciado vertical entre secciones */
+    }
+    
+    .collapsible {
+      font-size: 14px; /* Tamaño de fuente más pequeño */
+      padding: 15px; /* Ajuste de padding */
+    }
+    
+    .collapsible-content {
+      padding: 0 15px; /* Ajuste de padding en contenido colapsable */
+    }
+  }
+</style>
+
+<div class="sections">
+  <!-- Bibliografía -->
+  <div class="section-column">
+    <button class="collapsible">ALINEACIÓN NO CONFIRMADA</button>
+    <div class="collapsible-content">
+      <ul>
+        <li><a href="https://sangrecarbayona.blogspot.com/search/label/AlineacionOficial" target="_blank"><b>- - -  &nbsp; (Haz clic aquí)</b></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Fin Alineación Confirmada -->
+  
+  
+  
+  
+ <!-- Inicio Espacio en Blanco -->
+
+<div style="height: 30px;"></div>
+
+<!-- Fin Espacio en Blanco --> 
+  
+  
+<!-- Inicio Letrero parpadeante -->
+
+
+<script>
+window.setInterval (BlinkIt, 500);
+var color = "blue";
+function BlinkIt () {
+var blink = document.getElementById ("blink");
+color = (color == "#ffffff")? "blue" : "#ffffff";
+blink.style.color = color;
+blink.style.fontSize='36px';}
+</script>
+<div id="blink"><u><b>Jornada 42 LaLiga Hypermotion </b></u></div><br/>
+<div id="blink" onclick="parent.location=''">
+</div>
+  
+
+
+<!-- Fin Letrero parpadeante -->
+
+
+
+<!-- Nuevo marcador -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcador Deportivo</title>
+    <style>
+       <style>
+        @font-face {
+            font-family: 'Days One';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/s/daysone/v10/mem9YaCnxnKRiYZOCIYScr0.ttf) format('truetype');
+        }
+        
+        body {
+            background: #0e0eec;
+            background-size: cover;
+        }
+        
+       
+      
+       .container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0; 
+        } 
+      
+      
+        .container3 {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            margin-bottom: 40px; /* Puedes ajustar este valor según el espacio que necesites */
+        } 
+      
+      
+        
+        .score-board {
+            font-family: 'Days One', sans-serif;
+            list-style: none;
+            padding: 0;
+            margin: 0 auto;
+            position: relative;
+            width: 550px;
+            height: 50px;
+            text-align: center;
+            font-size: 36px;
+            border-radius: 5px 5px 30px 30px;
+            color: #0E1326;
+            background: linear-gradient(to bottom, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%);
+            font-weight: bold;
+        }
+        
+        .score-board li {
+            display: inline-block;
+        }
+        
+        .score-board li img {
+            max-height: 50px;
+            position: absolute;
+            top: 0;
+          
+        }
+        
+        .score-board .team-home img {
+            float: left;
+            left: 0;
+            border-radius: 5px 5px 5px 30px;
+        }
+        
+        .score-board .score {
+            color: white;
+            padding: 0px 30px;
+            border-radius: 10px 10px 100px 100px;
+            background: linear-gradient(to bottom, #3b679e 0%, #2b88d9 50%, #207cca 51%, #7db9e8 100%);
+        }
+        
+        .score-board .team-visitor img {
+            float: right;
+            right: 0;
+            border-radius: 5px 5px 30px 5px;
+        }
+        
+        .score-board .time {
+            color: white;
+            clear: both;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            margin-left: -135px;
+            width: 270px;
+            font-size: 60%;
+            border-radius: 5px 5px 50px 50px;
+            background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d 100%);
+        }
+        
+        @media screen and (max-width: 600px) {
+            .score-board {
+                width: 99%;
+                height: 100%;
+                font-size: 24px;
+                flex-direction: column;
+                align-items: center;
+                padding: 10px 0;
+            }
+            
+            .score-board li {
+                display: grid;
+                justify-content: center;
+                align-items: center;
+                margin: 2px 0;
+                font-weight: bold;
+              
+            }
+            
+            .score-board li img {
+                position: static;
+                max-height: 100px;
+                margin-right: 10px;
+                
+            }
+            
+            .score-board .team-home img,
+            .score-board .team-visitor img {
+                float: none;
+                border-radius: 5px;
+                
+            }
+          
+         
+            
+            .score-board .score {
+                padding: 25px 105px;
+                border-radius: 90px;
+                height: 55px;
+                
+            }
+            
+           .score-board .time {
+                position: static;
+                width: 100%;
+                margin: 2px 0 0 0;
+                font-size: 25px;
+                font-weight: bold;
+                border-radius: 90px;
+                height: auto;
+             padding: 25px 105px;
+            }
+          
+      
+          
+          
+          
+          
+          
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="score-board">
+            <ul class="score-board">
+  <li class="team-home"><img src="https://i.postimg.cc/2yxjqhtL/oviedo.jpg" alt="Oviedo"/>OVI</li>
+  <li class="score">&nbsp; - &nbsp; </li>
+  <li class="team-visitor"><img src="https://i.postimg.cc/Dw4m4zjD/C-diz-C-F-PNG.png"alt="Cádiz"/>CAD</li>
+  <li class="time">&nbsp;<u>Carlos Tartiere</u>&nbsp;<br/><small>Dom. 01 Jun, 18:30</small></li>
+   
+</ul>
+        </div>
+    </div>
+</body>
+</html> 
+
+<!-- Fin Nuevo marcador -->
+  
+  
+  
+
+<!-- Inicio Espacio en Blanco -->
+
+<div style="height: 60px;"></div>
+
+<!-- Fin Espacio en Blanco -->
+  
+  
+  
+<!doctype html>
+<style>
+h2 {
+  text-align: left;
+  color:#0e0eec;
+}
+</style>
+  
+<br/><br/>
+<h2 style="color:blue" ><u><b>Goleadores J 42 LaLiga Hypermotion</b></u></h2>
+
+
+
+<!-- Inicio Espacio en Blanco -->
+
+<div style="height: 30px;"></div>
+
+<!-- Fin Espacio en Blanco -->
+        
+        
+
+
+  
+  
+  
+<!-- Inicio Nuevo Card Slide 3 -->  
+  
+      <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>FIFA Player Cards</title>
+  <style>
+    @font-face {
+      font-family: 'Wordwalker';
+      src: url('https://cdn.jsdelivr.net/gh/taramunde1974/Sangre-Carbayona@main/Wordwalker%20Regular.ttf') format('truetype');
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    .cards-wrapper {
+      display: flex;
+      gap: 5px;  /* Espacio entre las tarjetas */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card-container {
+      width: 200px;
+      height: 300px;
+      perspective: 1000px;
+    }
+    
+    .card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
+      cursor: pointer;
+    }
+
+    .card:hover, .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    
+    .front {
+      background: linear-gradient(45deg, #0e0eec, #85a2ed);
+      padding: 10px;
+    }
+
+    .back {
+      background: linear-gradient(45deg, #0e0eec, #85a2ed);
+      transform: rotateY(180deg);
+      padding: 10px;
+    }
+    
+    .team-crest {
+      position: absolute;
+      top: 145px;
+      right: 15px;
+      width: 25px;
+      height: 40px;
+      z-index: 2;
+    }
+
+    .player-image-container {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      margin: 15px auto 0;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid white;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .player-image { 
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: relative;
+      left: -2.5%;
+      top: 1%;
+    }
+
+    .nation-country {
+      position: absolute;
+      top: 10px;
+      right: 8px;
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .player-number {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      font-size: 25px;
+      color: white;
+      font-weight: bold;
+      z-index: 2;
+    }
+    
+    .player-name {
+      text-align: center;
+      color: white;
+      font-size: 14px;
+      margin-top: 25px;
+      font-weight: bold;
+    }
+    
+    .team-name {
+      text-align: center;
+      color: white;
+      font-size: 20px;
+      margin-top: 35px;
+      font-weight: bold;
+      font-family: 'Wordwalker', sans-serif;
+    }
+    
+    .team-name2 {
+
+      
+
+      text-align: center;
+      color: white;
+      font-size: 20px;
+      margin-top: 77px;
+      font-weight: bold;
+      font-family: 'Wordwalker', sans-serif;
+      
+
+    }
+    
+    .player-name-back {
+      text-align: center;
+      color: white;
+      font-size: 12px;
+      margin-top: 5px;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+    
+    .temp-name {
+
+      text-align: center;
+
+      color: white;
+
+      font-size: 9px;
+
+      margin-top: 5px;
+
+      font-weight: bold;
+
+      
+
+    }
+
+    .stats {
+      color: white;
+      margin-top: 20px;
+    }
+    
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+      font-size: 10px;
+    }
+    
+    .link-button {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 5px 10px;
+      background: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #0048ff;
+      font-weight: bold;
+      font-size: 10px;
+      transition: all 0.3s;
+    }
+
+    .link-button:hover {
+      background: #ff8c00;
+      color: white;
+    }
+    
+    .no-goals-text {
+
+  width: 150px;
+
+  height: 150px;
+
+  margin: 15px auto 0;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background: white;
+
+  border-radius: 50%;
+
+  color: #0048ff;
+
+  font-weight: bold;
+
+  font-size: 18px;
+
+  text-align: center;
+
+}
+    
+  </style>
+</head>
+<body>
+  <div class="cards-wrapper">
+    
+    <!-- Inicio Sin Goles-->
+    
+        <div class="card-container">
+
+         <div class="card">
+
+          <div class="front">
+
+          <div class="no-goals-text">SIN GOLES</div>
+
+          <div class="player-name"></div>
+
+          <div class="team-name2">Real Oviedo</div>
+
+        </div>
+
+        <div class="back">
+
+          <div class="player-name-back">REAL OVIEDO</div>
+
+          <div class="stats">
+
+            <div class="stat">
+
+              <span>Partidos Jugados:</span>
+
+              <span>--</span>
+
+            </div>
+
+            <div class="stat">
+
+              <span>Asistencias:</span>
+
+              <span>--</span>
+
+            </div>
+
+            <div class="stat">
+
+              <span>Goles:</span>
+
+              <span>--</span>
+
+            </div>
+
+            <div class="stat">
+
+              <span>Gol Minuto:</span>
+
+              <span>--'</span>
+
+            </div>
+
+            
+
+          </div>
+
+          <a href="" class="link-button">Ver Ficha</a>
+
+        </div>
+
+      </div>
+
+    </div>  
+          
+    
+    <!-- Fin Sin Goles-->
+    
+    
+    
+
+    <!-- Inicio Primer Goleador-->
+    
+ <!--    <div class="card-container">
+      <div class="card">
+        <div class="front">
+          <div class="player-image-container">
+            <img class="player-image" src="https://i.postimg.cc/q7GMcpVK/Nacho-Vidal-PNG-Alineaci-n.png" alt="Nacho Vidal">
+          </div>
+          <img class="nation-country" src="https://i.postimg.cc/jjfxjjwP/Espa-a.jpg" alt="España">
+          <img class="team-crest" src="https://i.postimg.cc/rwPjdyz9/Real-Oviedo-2019-actualidad.png" alt="Real Oviedo">
+          <div class="player-number">5</div>
+          <div class="player-name">Nacho Vidal</div>
+          <div class="team-name">Real Oviedo</div>
+        </div>
+        <div class="back">
+          <div class="player-name-back"><u>NACHO VIDAL</u></div>
+         <div class="temp-name">(Temp. 2024/25)</div> 
+          <div class="stats">
+            <div class="stat">
+              <span>PARTIDOS JUGADOS:</span>
+              <span>17</span>
+            </div>
+            <div class="stat">
+              <span>ASISTENCIAS:</span>
+              <span>1</span>
+            </div>
+            <div class="stat">
+              <span>GOLES:</span>
+              <span>3</span>
+            </div>
+            <div class="stat">
+              <span>GOL MINUTO:</span>
+              <span>74'</span>
+            </div>
+            
+            
+          </div>
+          <a href="https://www.transfermarkt.es/nacho-vidal/profil/spieler/216870" target="_blank" class="link-button">Ver Ficha</a>
+        </div>
+      </div>
+    </div>  -->
+    
+    <!-- Fin Primer Goleador-->
+    
+    
+    <!-- Inicio Segundo Goleador-->
+    
+     
+    
+    <!-- Fin Segundo Goleador-->
+    
+    
+    
+    
+    
+  </div>
+
+  <script>
+    window.onload = function() {
+      const cards = document.querySelectorAll('.card');
+      const linkButtons = document.querySelectorAll('.link-button');
+
+      cards.forEach(card => {
+        card.addEventListener('click', function(e) {
+          e.stopPropagation();
+          this.classList.toggle('flipped');
+        });
+      });
+
+      document.addEventListener('click', function(e) {
+        cards.forEach(card => {
+          if (!card.contains(e.target) && card.classList.contains('flipped')) {
+            card.classList.remove('flipped');
+          }
+        });
+      });
+
+      linkButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+      });
+    };
+  </script>
+</body>
+</html>
+
+
+
+
+<!-- Fin Nuevo Card Slide 3 -->
+  
+  
+  
+  
+  
+
+<!-- Inicio Espacio en Blanco -->
+
+<div style="height: 30px;"></div>
+
+<!-- Fin Espacio en Blanco -->
+
+
+
+
+
+<!-- Inicio Tabla agradecimientos -->
+
+<style type="text/css">
+.tg {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tg td,
+.tg th {
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  padding: 10px 5px;
+  word-break: normal;
+  vertical-align: top;
+}
+
+/* Flexbox para alinear las secciones horizontalmente */
+.sections {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+/* Cada columna tendrá el mismo ancho */
+.section-column {
+  flex: 1;
+  margin: 0 10px; /* Espacio entre columnas */
+}
+
+.collapsible-content {
+  display: none;
+  position: absolute;
+  top: 40px; /* Despliega hacia abajo */
+  left: 0; /* Despliega desde el principio del contenedor padre */
+  background-color: #f9f9f9;
+  padding: 15px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  width: 90%; /* Puedes ajustar el ancho según prefieras */
+}
+
+button {
+  background-color: #0e0eec;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+button:after {
+  content: '\25BC'; /* Flecha hacia abajo */
+  float: right;
+}
+
+button.active:after {
+  content: '\25B2'; /* Flecha hacia arriba */
+}
+
+a:link, a:visited {
+  color: blue;
+}
+</style>
+
+<div class="sections">
+  <!-- Bibliografía -->
+  <div class="section-column">
+    <button class="collapsible">Bibliografía</button>
+    <div class="collapsible-content">
+      <ul>
+        <li><span style="color:#3531FF"><b>De Fozaneldi al Parque del Oeste - 80 años de fútbol en Oviedo - La Nueva España.</b></span></li>
+        <li><span style="color:#3531FF"><b>Las Camisetas del Real Oviedo - Historia y Anécdotas - José Á. Muñiz Mangas - Delallama Editorial</b></span></li>
+        <li><span style="color:#3531FF"><b>Cromos Para una Historia del Real Oviedo - José Á. Muñiz Mangas - Delallama Editorial</b></span></li>
+        <li><span style="color:#3531FF"><b>Los Derbis Asturianos Desde 1926 - José Á. Muñiz Mangas - Delallama Editorial</b></span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Enlaces externos -->
+  <div class="section-column">
+    <button class="collapsible">Enlaces externos</button>
+    <div class="collapsible-content">
+      <ul>
+        <li><a href="https://www.realoviedo.es/" target="_blank"><b>Real Oviedo, S.A.D. - Web Oficial.</b></a></li>
+        <li><a href="https://www.realoviedo.info/" target="_blank"><b>Real Oviedo, su historia en números.</b></a></li>
+        <li><a href="http://lafutbolteca.com/" target="_blank"><b>La Futbolteca.com - La Enciclopedia del Fútbol Español.</b></a></li>
+        <li><a href="https://www.bdfutbol.com/es/index.html" target="_blank"><b>BdFutbol - Datos Históricos y estadístiacas de La Liga española, Premier, Bundesliga, Serie A, Ligue 1, Primeira Liga, Eredivisie y Fútbol femenino.</b></a></li>
+        <li><a href="https://www.transfermarkt.es/" target="_blank"><b>Transfermarkt.</b></a></li>
+        <li><a href="https://www.lapreferente.com/" target="_blank"><b>La Preferente.com - La Web del Fútbol Modesto.</b></a></li>
+        <li><a href="https://www.futbolasturiano.es/" target="_blank"><b>Futbol Asturiano.es - Diario digital independiente del fútbol asturiano.</b></a></li>
+        <li><a href="http://www.cihefe.es/" target="_blank"><b>Cihefe - La Academia del Fútbol Español.</b></a></li>
+        <li><a href="https://equiposdefutbol2.blogspot.com/" target="_blank"><b>Equipos de Fútbol - Fotos de Formaciones de Equipos de Fútbol y Selecciones Nacionales.</b></a></li>
+        <li><a href="http://basedejugadores.blogspot.com/" target="_blank"><b>BASE DE JUGADORES - Trayectoria de jugadores del Real Oviedo.</b></a></li>
+        <li><a href="https://datos-historia-real-oviedo.webnode.es/" target="_blank"><b>Datos Historia Real Oviedo - Orgullo, Valor y Garra.</b></a></li>
+        <li><a href="http://camisetassportclub.blogspot.com/" target="_blank"><b>CamisetasSportClub - Un paseo virtual por las equipaciones de equipos de fútbol de todos los tiempos.</b></a></li>
+        <li><a href="http://jugadoressegundab.blogspot.com/" target="_blank"><b>Jugadores de La Segunda B.</b></a></li>
+        <li><a href="https://zonaoviedista-plantilla.blogspot.com/" target="_blank"><b>Zona Oviedista Plantilla.</b></a></li>
+        
+        <li><a href="https://diariooviedista.blogspot.com/" target="_blank"><b>Diario de un Oviedista.</b></a></li>
+        <li><a href="https://www.rsssf.org/" target="_blank"><b>RSSSF - The Rec.Sport.Soccer Statistics Foundation.</b></a></li>
+        <li><a href="https://www.futbol-regional.es/" target="_blank"><b>FRE - Fútbol Regional Español.</b></a></li>
+        
+        
+      </ul>
+    </div>
+  </div>
+
+  <!-- Redes sociales -->
+  <div class="section-column">
+    <button class="collapsible">Redes sociales</button>
+    <div class="collapsible-content">
+      <ul>
+        <li><a href="https://twitter.com/mangas59" target="_blank"><b>Mangas - @mangas59</b></a></li>
+        <li><a href="https://twitter.com/Basiliscus1926" target="_blank"><b>BASILISCUS CIA. - @Basiliscus1926</b></a></li>
+        <li><a href="https://twitter.com/Fritzyustas" target="_blank"><b>Frichu Yustas - @Fritzyustas</b></a></li>
+        <li><a href="https://twitter.com/REALOVIEDODATOS" target="_blank"><b>Eduardo Muñoz - @REALOVIEDODATOS</b></a></li>
+        <li><a href="https://twitter.com/maarcoscosio" target="_blank"><b>Marcos Cosío - @maarcoscosio</b></a></li>
+        <li><a href="https://twitter.com/OviedoFichajes" target="_blank"><b>Oviedo Fichajes - @OviedoFichajes</b></a></li>
+        <li><a href="https://twitter.com/ValentinFerna62" target="_blank"><b>Valentín Fernandez - @ValentinFerna62</b></a></li>
+        <li><a href="https://twitter.com/lapaginaoviedin" target="_blank"><b>La Página de Oviedin - @lapaginaoviedin</b></a></li>
+        <li><a href="https://twitter.com/Histoviedista" target="_blank"><b>Historia Oviedista - @Histoviedista</b></a></li>
+        <li><a href="https://www.facebook.com/groups/antiguosjugadoresasturias" target="_blank"><b>Fútbol Sala, Fútbol, Fútbol-Playa, Asturias - Antiguos Jugadores - Facebook</b></a></li>
+        <li><a href="https://www.facebook.com/groups/posterascolor" target="_blank"><b>PACO (Poster As Color Originales) - Facebook</b></a></li>
+        <li><a href="https://www.facebook.com/groups/920692319729291" target="_blank"><b>Cromos de Fútbol de Toda La Historia - Facebook</b></a></li>       
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+// JavaScript para activar los dropdowns y cerrarlos cuando se hace clic fuera
+document.addEventListener("DOMContentLoaded", function () {
+  var coll = document.getElementsByClassName("collapsible");
+  var activeCollapsible = null;
+
+  // Función para cerrar el contenido abierto
+  function closeActiveContent() {
+    if (activeCollapsible) {
+      activeCollapsible.classList.remove("active");
+      var content = activeCollapsible.nextElementSibling;
+      content.style.display = "none";
+      activeCollapsible = null;
+    }
+  }
+
+  // Evento click para los botones desplegables
+  for (var i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function (event) {
+      // Cierra el contenido activo si ya hay uno abierto
+      if (activeCollapsible && activeCollapsible !== this) {
+        closeActiveContent();
+      }
+
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+        activeCollapsible = null;
+      } else {
+        content.style.display = "block";
+        activeCollapsible = this;
+      }
+
+      event.stopPropagation(); // Evita que el click se propague al body
+    });
+  }
+
+  // Cerrar el contenido abierto si se hace clic fuera
+  document.addEventListener("click", function () {
+    closeActiveContent();
+  });
+});
+</script>
+
+
+
+
+<!-- Fin Tabla agradecimientos -->
+
+
+
+
+
+<!-- Inicio Espacio en Blanco -->
+
+<div style="height: 30px;"></div>
+
+<!-- Fin Espacio en Blanco -->
+
+
+
+
+
+<!-- Nuevo partido -->
+
+<div class="container3">
+  <div class="score-board"> 
+
+<ul class="score-board">
+  <li class="team-home"><img src="https://i.postimg.cc/2yxjqhtL/oviedo.jpg" alt="Oviedo"/>OVI</li>
+  <li class="score">&nbsp; - &nbsp; </li>
+  <li class="team-visitor"><img src="https://i.postimg.cc/Dw4m4zjD/C-diz-C-F-PNG.png"alt="Cádiz"/>CAD</li>
+  <li class="time">&nbsp;<u>Carlos Tartiere</u>&nbsp;<br/><small>Dom. 01 Jun, 18:30</small></li>
+   
+</ul>
+    
+    </div>
+</div>
+
+<!-- Fin Nuevo partido -->
+
+
+<!-- Inicio Espacio en Blanco -->
+
+<div style="height: 80px;"></div>
+
+<!-- Fin Espacio en Blanco -->
+
+
+<!-- Inicio Tiempo Partido Descuento -->
+  
+<!DOCTYPE html>
+<html>
+    <head>
+<style>       
+body {
+    padding: 70px 50px;
+    background: 
+    font-family: sans-serif;
+    font-weight: lighter;
+    display: flex; /* Agregado */
+    flex-direction: column; /* Agregado */
+    align-items: center; /* Agregado */
+    justify-content: center; /* Agregado */
+}
+  
+  .timer-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+  
+  
+#timer {
+    font-size: 3em;
+    font-weight: 100;
+    color: blue;
+    text-shadow: 0 0 20px #0e0eec;
+    text-align: center; /* Agregado */
+}
+#timer div {
+    display: inline-block;
+    min-width: 90px;
+    text-align: center; /* Agregado */
+}
+#timer div span {
+    color: #0e0eec;
+    display: block;
+    font-size: .35em;
+    font-weight: 400;
+}
+
+h2 {
+    text-align: center; /* Agregado */
+    width: 100%; /* Agregado */
+}
+</style>
+    </head>
+ <body>
+   
+   <div class="timer-container">
+            <h2><u><b>TIEMPO PARA EL SIGUIENTE PARTIDO</b></u></h2>
+            <div id="timer"></div>
+        </div>
+<script>
+function updateTimer() {
+    future = Date.parse("Jun 01, 2025 18:30:00");
+    now = new Date();
+    diff = future - now;
+    days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    hours = Math.floor(diff / (1000 * 60 * 60));
+    mins = Math.floor(diff / (1000 * 60));
+    secs = Math.floor(diff / 1000);
+    d = days;
+    h = hours - days * 24;
+    m = mins - hours * 60;
+    s = secs - mins * 60;
+    document.getElementById("timer")
+        .innerHTML =
+        '<div>' + d + '<span>Días</span></div>' +
+        '<div>' + h + '<span>Horas</span></div>' +
+        '<div>' + m + '<span>Minutos</span></div>' +
+        '<div>' + s + '<span>Segundos</span></div>';
+}
+setInterval('updateTimer()', 1000);
+</script>
+    
+ </body>
+</html><br/><br/>
+  
+  <!-- Fin Tiempo Partido Descuento -->
+  
+  
+  
+  <!-- Inicio Calendario Deportivo 
+
+
+  
+    // Aplicar clase blinking-border al día específico (por ejemplo, '2024-11-15')
+       if (dateString === '2024-11-15') { // Cambia esta fecha según lo necesites
+           html += `<div class="day ${isToday ? 'today' : ''} ${hasNoteClass} blinking-border" data-date="${dateString}">${day}</div>`;
+       } else {
+           html += `<div class="day ${isToday ? 'today' : ''} ${hasNoteClass}" data-date="${dateString}">${day}</div>`;
+       }
+   }         
+ 
+
+        // Definir los días que deben parpadear
+const blinkingDays = ['2024-11-15', '2024-11-20']; // Puedes agregar más fechas aquí y si quieres una fecha el de arriba que empieza por if
+
+
+
+
+
+
+
+-->
+  
+  
+ <!-- Inicio Calendario Deportivo 
+
+
+  
+    // Aplicar clase blinking-border al día específico (por ejemplo, '2024-11-15')
+       if (dateString === '2024-11-15') { // Cambia esta fecha según lo necesites
+           html += `<div class="day ${isToday ? 'today' : ''} ${hasNoteClass} blinking-border" data-date="${dateString}">${day}</div>`;
+       } else {
+           html += `<div class="day ${isToday ? 'today' : ''} ${hasNoteClass}" data-date="${dateString}">${day}</div>`;
+       }
+   }         
+ 
+
+        // Definir los días que deben parpadear
+const blinkingDays = ['2024-11-15', '2024-11-20']; // Puedes agregar más fechas aquí y si quieres una fecha el de arriba que empieza por if
+
+
+
+
+
+
+
+-->
+  
+  
+  
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario Interactivo con Notas Desplegables</title>
+    <style>
+        body {
+            background: #0e0eec;
+            background-size: cover;
+        }
+
+        #calendario-container .calendar {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #0e0eec;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: white;
+            width: 100%;
+            max-width: 300px;
+            position: relative;
+            justify-content: center;
+            margin: 20px 0; /* Margen superior e inferior */
+        }
+        #calendario-container .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        #calendario-container .month {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+        }
+        #calendario-container .days-of-week,
+        #calendario-container .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            width: 100%;
+            gap: 2px;
+        }
+        #calendario-container .day-of-week,
+        #calendario-container .day {
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: flex-start; /* Cambiado a flex-start */
+            align-items: center;
+            font-size: 14px;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+        #calendario-container .day-of-week {
+            font-weight: bold;
+            background-color: #f0f0f0;
+        }
+        #calendario-container .day {
+            border: 1px solid rgba(100, 100, 100, 0.7);
+        }
+        #calendario-container .arrow {
+            cursor: pointer;
+            font-size: 24px;
+            user-select: none;
+        }
+        #calendario-container .today {
+            border: 2px solid blue;
+            background-color: #e0f7fa;
+        }
+
+        @keyframes blink-border {
+          from { border-color: transparent; }
+          to { border-color: blue; }
+        }
+
+        .blinking-border {
+          animation: blink-border 1s ease-in-out infinite;
+          border-width: 5px;
+          border-style: solid;
+        }
+
+        #calendario-container .has-note::after {
+            content: '';
+            position: absolute;
+            right: 2px;
+            bottom: 2px;
+            width: 8px;
+            height: 8px;
+        }
+
+        #calendario-container .has-note-blue::after { background-color: blue; }
+        #calendario-container .has-note-red::after { background-color: red; }
+        #calendario-container .has-note-green::after { background-color: green; }
+        #calendario-container .has-note-yellow::after { background-color: yellow; }
+
+        #note-popup {
+            position: absolute;
+            background-color: white;
+            border-radius: 4px;
+            width: 300px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+            border: 2px solid transparent;
+            overflow: hidden;
+            text-align: center;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .shield-icon {
+          width: 25px;
+          height: auto;
+          margin-left: 15px;
+          margin-right: 15px;
+          vertical-align: middle;
+        }
+
+        .note-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding-bottom: 5px;
+          margin-bottom: 5px;
+        }
+
+        hr {
+          flex-grow: 1;
+          margin: 0;
+          border: none;
+          border-top: 1px solid rgba(200,200,200,0.7);
+        }
+
+        .note-text {
+          font-size: 14px;
+          line-height: 1.5;
+          text-align: center;
+          font-weight:bold;
+        }
+    </style>       
+</head>
+<body>
+
+<div id="calendario-container" style="width: 100%; display: flex; justify-content: center; margin: 20px 0;">
+    <div class="calendar">
+        <div class="header">
+          <div class="arrow" id="prev">&lt;</div>
+          <img src="https://i.postimg.cc/rwPjdyz9/Real-Oviedo-2019-actualidad.png" alt="Escudo" class="shield-icon">
+          <div class="month" id="monthName"></div>
+          <img src="https://i.postimg.cc/rwPjdyz9/Real-Oviedo-2019-actualidad.png" alt="Escudo" class="shield-icon">
+          <div class="arrow" id="next">&gt;</div>
+      </div>
+      <div class="days-of-week">
+          <div class="day-of-week">Lun</div>
+          <div class="day-of-week">Mar</div>
+          <div class="day-of-week">Mié</div>
+          <div class="day-of-week">Jue</div>
+          <div class="day-of-week">Vie</div>
+          <div class="day-of-week">Sáb</div>
+          <div class="day-of-week">Dom</div>
+      </div>
+      <div class="days" id="days"></div>
+      <div id="note-popup"></div>
+    </div>
+</div>
+
+<script>
+const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+let currentMonth = new Date().getMonth();
+let currentYear = new Date().getFullYear();
+const today = new Date().getDate();
+const todayMonth = new Date().getMonth();
+const todayYear = new Date().getFullYear();
+
+  
+// Objeto para almacenar las notas predefinidas con color y escudos, blue, red, green, yellow  
+const notes = {
+   
+  
+  
+  
+  
+   '2025-05-25': {
+       text:'J.41 Tenerife - Oviedo<br>18:30',
+       color:'blue',
+       shieldUrlLeft:'https://i.postimg.cc/3r6ztJJY/C-D-Tenerife-2017-PNG.png', // URL del escudo izquierdo
+       shieldUrlRight:'https://i.postimg.cc/rwPjdyz9/Real-Oviedo-2019-actualidad.png' // URL del escudo derecho
+   },
+  
+   '2025-06-01': {
+       text:'J.42 Oviedo - Cádiz<br>18:30',
+       color:'blue',
+       shieldUrlLeft:'https://i.postimg.cc/rwPjdyz9/Real-Oviedo-2019-actualidad.png', // URL del escudo izquierdo
+       shieldUrlRight:'https://i.postimg.cc/Dw4m4zjD/C-diz-C-F-PNG.png' // URL del escudo derecho
+   }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+};
+
+const blinkingDays = ['2025-05-25', '2025-06-01'];
+
+function renderCalendar() {
+   const monthName = document.getElementById('monthName');
+   const daysContainer = document.getElementById('days');
+
+   monthName.innerText = `${monthNames[currentMonth]} ${currentYear}`;
+   daysContainer.innerHTML = generateMonthHTML(currentYear, currentMonth);
+
+   const dayElements = daysContainer.getElementsByClassName('day');
+   for (let dayElement of dayElements) {
+       dayElement.addEventListener('click', handleDayClick);
+   }
+}
+
+function generateMonthHTML(year, month) {
+   const daysInMonth = new Date(year, month + 1, 0).getDate();
+   const firstDay = new Date(year, month, 1).getDay();
+   let html = '';
+
+   const adjustedFirstDay = (firstDay === 0) ? 6 : firstDay - 1;
+
+   for (let i = 0; i < adjustedFirstDay; i++) {
+       html += `<div class="day"></div>`;
+   }
+
+   for (let day = 1; day <= daysInMonth; day++) {
+       const isToday = (day === today && month === todayMonth && year === todayYear);
+       const dateString = `${(month + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+       const fullDateString = `${year}-${dateString}`;
+       
+       let hasNoteClass = '';
+       if (notes[fullDateString]) {
+           hasNoteClass = `has-note has-note-${notes[fullDateString].color}`;
+       }
+
+       const shouldBlink = blinkingDays.some(blinkDate => {
+           const [blinkMonth, blinkDay] = blinkDate.split('-').slice(1);
+           return blinkMonth === (month + 1).toString().padStart(2, '0') && blinkDay === day.toString().padStart(2, '0');
+       });
+
+       if (shouldBlink) { 
+           html += `<div class="day ${isToday ? 'today' : ''} ${hasNoteClass} blinking-border" data-date="${fullDateString}">${day}</div>`;
+       } else {
+           html += `<div class="day ${isToday ? 'today' : ''} ${hasNoteClass}" data-date="${fullDateString}">${day}</div>`;
+       }
+   }
+
+   return html;
+}
+
+function handleDayClick(event) {
+   const dateString = event.target.getAttribute('data-date');
+   const notePopup = document.getElementById('note-popup');
+
+   if (dateString && notes[dateString]) {
+       const note = notes[dateString];
+       
+       notePopup.innerHTML = `
+           <div class="note-header">
+               <img src="${note.shieldUrlLeft}" alt="Escudo Izquierdo" class="shield-icon">
+               <hr>
+               <img src="${note.shieldUrlRight}" alt="Escudo Derecho" class="shield-icon">
+           </div>
+           <div class="note-text">${note.text}</div>
+       `;
+       
+       notePopup.style.borderColor = note.color;
+       notePopup.style.display = 'block';
+
+       const rect = event.target.getBoundingClientRect();
+       const calendarRect = document.querySelector('.calendar').getBoundingClientRect();
+
+       notePopup.style.borderWidth = '2px';
+       
+       notePopup.style.top = `${rect.bottom - calendarRect.top + 5}px`;
+       notePopup.style.left = `${rect.left - calendarRect.left}px`;
+   } else {
+       notePopup.style.display = 'none';
+   }
+}
+
+document.getElementById('prev').onclick = function() {
+   currentMonth--;
+   if (currentMonth < 0) { 
+       currentMonth = 11; 
+       currentYear--; 
+   }
+   renderCalendar();
+};
+
+document.getElementById('next').onclick = function() { 
+   currentMonth++;
+   if (currentMonth > 11) { 
+       currentMonth = 0; 
+       currentYear++; 
+   } 
+   renderCalendar();
+};
+
+document.addEventListener('click', function(event) { 
+   const notePopup = document.getElementById('note-popup'); 
+   if (!event.target.closest('.day') && !event.target.closest('#note-popup')) { 
+       notePopup.style.display = 'none'; 
+   } 
+});
+
+renderCalendar();
+</script>
+
+</body>
+</html>
+
+
+<!-- Fin Calendario Deportivo -->
+  
+
+
+  
+ 
+<!-- Inicio Gráfica Posición -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posición del Equipo por Jornada</title>
+    <style>
+        /* Contenedor raíz único para evitar conflictos */
+        .team-position-chart {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+        .team-position-chart .container {
+            max-width: 950px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px 10px 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .team-position-chart .chart-container {
+            position: relative;
+            height: 600px;
+            width: 100%;
+            padding-left: 0;
+            margin-left: 0;
+        }
+        .team-position-chart .team-info {
+            margin: 20px 0 0 10px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            border-left: 4px solid #0e0eec;
+        }
+        /* Subrayar solo los textos "Mejor posición" y "Peor posición" */
+        .team-position-chart .team-info .underline-text {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenedor raíz con clase única -->
+    <div class="team-position-chart">
+        <div class="container">
+            <div class="chart-container">
+                <canvas id="team-position-chart-canvas"></canvas>
+            </div>
+            
+            <div class="team-info">
+                <h3 id="team-position-name">Real Oviedo</h3>
+                <p><span class="underline-text">Mejor posición</span>: <span id="team-position-best">-</span></p>
+                <p><span class="underline-text">Peor posición</span>: <span id="team-position-worst">-</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+        // IIFE para encapsular el código
+        (function() {
+            // Sample data - replace with your actual data
+            const jornadas = Array.from({length: 42}, (_, i) => i + 1);
+            const posiciones = [6, 10, 13, 17, 10, 12, 9, 10, 8, 7, 4, 8, 4, 4, 2, 5, 8, 8, 5, 4, 
+                               6, 7, 6, 5, 6, 5, 5, 2, 6, 6, 6, 6, 6, 5, 5, 4, 4, 4, 5, 4, 3];
+
+            let teamName = "Real Oviedo";
+            let chart;
+
+            // Initialize the chart
+            function initChart() {
+                const ctx = document.getElementById('team-position-chart-canvas').getContext('2d');
+                
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: jornadas,
+                        datasets: [{
+                            label: 'Posición',
+                            data: posiciones,
+                            borderColor: '#0e0eec',
+                            backgroundColor: 'rgba(30, 144, 255, 0.1)',
+                            borderWidth: 3,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#0e0eec',
+                            fill: true,
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        layout: {
+                            padding: {
+                                left: 10,
+                                right: 30,
+                                top: 60,
+                                bottom: 10
+                            }
+                        },
+                        scales: {
+                            y: {
+                                reverse: true,
+                                min: 0,
+                                max: 22,
+                                ticks: {
+                                    stepSize: 1,
+                                    callback: function(value) {
+                                        if (Number.isInteger(value) && value >= 1 && value <= 22) {
+                                            return value;
+                                        }
+                                    },
+                                    font: {
+                                        size: 8
+                                    },
+                                    padding: 10
+                                },
+                                afterBuildTicks: function(scale) {
+                                    scale.ticks = Array.from({length: 22}, (_, i) => ({ value: i + 1 }));
+                                    return scale.ticks;
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Posición',
+                                    font: {
+                                        size: 14
+                                    }
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.1)'
+                                }
+                            },
+                            x: {
+                                ticks: {
+                                    autoSkip: false,
+                                    maxRotation: 90,
+                                    minRotation: 45,
+                                    font: {
+                                        size: 10
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Jornada',
+                                    font: {
+                                        size: 14
+                                    },
+                                    padding: {top: 10}
+                                }
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(tooltipItems) {
+                                        return `Jornada ${tooltipItems[0].label}`;
+                                    },
+                                    label: function(context) {
+                                        return `Posición: ${context.raw}`;
+                                    }
+                                }
+                            },
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+                
+                updateStats();
+            }
+
+            // Update statistics
+            function updateStats() {
+                const bestPos = Math.min(...posiciones);
+                const worstPos = Math.max(...posiciones);
+                
+                document.getElementById('team-position-best').textContent = bestPos;
+                document.getElementById('team-position-worst').textContent = worstPos;
+            }
+
+            // Initialize when the page loads
+            document.addEventListener('DOMContentLoaded', function() {
+                initChart();
+            });
+        })();
+    </script>
+</body>
+</html>
+
+<!-- Fin Gráfica Posición -->
+ 
+  
+  
+ 
+
+<!-- Inicio Compartir en Redes Sociales -->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compartir en Redes Sociales</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap');
+
+        :root {
+            --bg-color: rgb(0, 0, 0);
+            --container-bg-color: #fff;
+            --facebook-color: #1778F2;
+            --twitter-color: #1Da1f2;
+            --whatsapp-color: #25D366;
+            --telegram-color: #0088cc;
+        }
+
+        *, ::before, ::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-icon-list {
+            height: 100px;
+            width: 650px; /* Aumentado para acomodar el nuevo botón */
+            border-radius: 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Cambiado a 4 columnas */
+            justify-items: center;
+            align-items: center;
+            column-gap: 20px;
+            padding: 0 20px;
+            background-color: var(--container-bg-color);
+        }
+
+        .icon-group {
+            height: 50px;
+            width: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            border-radius: 10px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.7s ease;
+            overflow: hidden;
+            padding-left: 18px;
+        }
+
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .icon-group:hover {
+            width: 175px;
+        }
+
+        .icon-group:nth-child(1) {
+            border: 2px solid var(--facebook-color);
+        }
+
+        .icon-group:nth-child(2) {
+            border: 2px solid var(--twitter-color);
+        }
+
+        .icon-group:nth-child(3) {
+            border: 2px solid var(--whatsapp-color);
+        }
+
+        .icon-group:nth-child(4) {
+            border: 2px solid var(--telegram-color);
+        }
+
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+            z-index: 2;
+        }
+
+        .icon-group:hover .social-icon {
+            transform: scale(1.1);
+        }
+
+        .icon-text {
+            position: absolute;
+            left: 55px;
+            color: #fff;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.7s ease;
+            z-index: 2;
+        }
+
+        .icon-group:hover .icon-text {
+            opacity: 1;
+        }
+
+        .icon-bg {
+            position: absolute;
+            height: 110%;
+            width: 110%;
+            border-radius: 10px;
+            clip-path: circle(50% at -100% 50%);
+            z-index: 1;
+            transition: all 0.7s ease;
+            left: 0;
+            top: -5%;
+        }
+
+        .icon-group:hover .icon-bg {
+            clip-path: circle(160% at 10% 60%);
+        }
+
+        .icon-group:nth-child(1) .icon-bg {
+            background-color: var(--facebook-color);
+        }
+
+        .icon-group:nth-child(2) .icon-bg {
+            background-color: var(--twitter-color);
+        }
+
+        .icon-group:nth-child(3) .icon-bg {
+            background-color: var(--whatsapp-color);
+        }
+
+        .icon-group:nth-child(4) .icon-bg {
+            background-color: var(--telegram-color);
+        }
+
+        @media (max-width: 768px) {
+            .social-icon-list {
+                height: 250px;
+                width: 350px;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .icon-group:hover {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="social-icon-list">
+        <div class="icon-group" id="share-facebook">
+            <div class="icon-wrapper">
+                <img src="https://i.postimg.cc/mrz313vR/facebook.png" alt="Facebook" class="social-icon">
+            </div>
+            <span class="icon-text">Facebook</span>
+            <span class="icon-bg"></span>
+        </div>
+
+        <div class="icon-group" id="share-twitter">
+            <div class="icon-wrapper">
+                <img src="https://i.postimg.cc/gcLCLWSh/icono-twitter-1.png" alt="Twitter" class="social-icon">
+            </div>
+            <span class="icon-text">Twitter</span>
+            <span class="icon-bg"></span>
+        </div>
+
+        <div class="icon-group" id="share-whatsapp">
+            <div class="icon-wrapper">
+                <img src="https://i.postimg.cc/mk9JvYzj/icono-whatsapp-1.png" alt="WhatsApp" class="social-icon">
+            </div>
+            <span class="icon-text">WhatsApp</span>
+            <span class="icon-bg"></span>
+        </div>
+
+        <div class="icon-group" id="share-telegram">
+            <div class="icon-wrapper">
+                <img src="https://i.postimg.cc/1XKB9pTS/telegrama.png" alt="Telegram" class="social-icon">
+            </div>
+            <span class="icon-text">Telegram</span>
+            <span class="icon-bg"></span>
+        </div>
+    </div>
+
+    <script>
+        const urlToShare = window.location.href;
+        const textToShare = "Mira este contenido interesante";
+
+        document.getElementById('share-facebook').onclick = function() {
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}`, '_blank');
+        }
+
+        document.getElementById('share-twitter').onclick = function() {
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(textToShare)}&url=${encodeURIComponent(urlToShare)}`, '_blank');
+        }
+
+        document.getElementById('share-whatsapp').onclick = function() {
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(textToShare)}%20${encodeURIComponent(urlToShare)}`, '_blank');
+        }
+
+        document.getElementById('share-telegram').onclick = function() {
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(urlToShare)}&text=${encodeURIComponent(textToShare)}`, '_blank');
+        }
+      
+      
+      
+      
+    </script>
+</body>
+</html>
+
+
+<!-- Fin Compartir en Redes Sociales -->
+
+
+
